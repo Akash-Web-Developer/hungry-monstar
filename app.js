@@ -1,9 +1,11 @@
+// Catch All ID by get Element Id
 const search = document.getElementById("search");
   submit = document.getElementById("submit");
   random = document.getElementById("random");
   mealsEl = document.getElementById("meals");
   resultHeading = document.getElementById("result-heading");
   single_mealEl = document.getElementById("single-meal");
+//Search Meal by write Meal Name
 function searchMeal(e) {
   e.preventDefault();
   single_mealEl.innerHTML = "";
@@ -35,6 +37,7 @@ function searchMeal(e) {
     alert("Please enter a search term");
   }
 }
+//API Use for every meal ID
 function getMealById(mealID) {
   fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`)
     .then((res) => res.json())
@@ -64,6 +67,7 @@ function addMealToDOM(meal) {
       break;
     }
   }
+  //Dynamic
   single_mealEl.innerHTML = `
   <div class="single-meal">
     <h1>${meal.strMeal}</h1>
@@ -81,6 +85,8 @@ function addMealToDOM(meal) {
     </div>
   </div>`;
 }
+
+//Event Listener Add
 submit.addEventListener("submit", searchMeal);
 random.addEventListener("click", getRandomMeal);
 mealsEl.addEventListener("click", (e) => {
