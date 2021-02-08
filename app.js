@@ -10,13 +10,16 @@ const searchMeal = () => {
         //Here Load Data
         fetch(url)
             .then(res => res.json())
-            .then(data => displayFoods(data.meals));
-    }
+            .then(data => displayFoods(data.meals));                      
+    }    
 }
 //After Search Display Food Menu
 const displayFoods = foods => {
     const foodContainer = document.getElementById('food-container');
     foodContainer.innerHTML = '';
+    //After search New Food Clear old Ingredients Page
+    const foodInfo = document.getElementById('food-detail');
+    foodInfo.innerHTML = '';
     foods.forEach(food => {
         const foodNameDiv = document.createElement('div');
         foodNameDiv.innerHTML = `
@@ -30,7 +33,7 @@ const displayFoods = foods => {
             </div>
         `
         foodContainer.appendChild(foodNameDiv);
-    })
+    })   
 }
 //After Click Any Food for get Ingredients & Some info Use API
 const getIngredients = (id) => {
@@ -56,11 +59,7 @@ const renderFoodDetails = food => {
             <p>${food.strIngredient7}</p>
             <p>${food.strIngredient8}</p>
             <p>${food.strIngredient9}</p>
-            <p>${food.strIngredient11}</p>
-            <p>${food.strIngredient12}</p>
-            <p>${food.strIngredient13}</p>
-            <p>${food.strIngredient14}</p> 
-            <p>${food.strIngredient15}</p>      
+            <p>${food.strIngredient10}</p>                 
     `
 }
   //Thank You
