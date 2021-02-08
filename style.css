@@ -46,6 +46,5 @@
 #food-container{
     display: grid;
     grid-template-columns: repeat(4,280px);
-    grid-gap: 20px;
-    
+    grid-gap: 20px;   
 }
