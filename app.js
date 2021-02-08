@@ -1,100 +1,66 @@
-// Catch All ID by get Element Id
-const search = document.getElementById("search");
-  submit = document.getElementById("submit");
-  random = document.getElementById("random");
-  mealsEl = document.getElementById("meals");
-  resultHeading = document.getElementById("result-heading");
-  single_mealEl = document.getElementById("single-meal");
-
-//Search Meal by write Meal Name
-function searchMeal(e) {
-  e.preventDefault();
-  single_mealEl.innerHTML = "";
-  const term = search.value;
-  console.log(term);
-  if (term.trim()) {
-    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${term}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        resultHeading.innerHTML = `<h3 style="color: black">Search results for '${term}':</h3>`;
-        if (data.meals === null) {
-          resultHeading.innerHTML = `<p style="color: black">There are no search results. Try again!</p>`;
-        } else {
-          mealsEl.innerHTML = data.meals
-            .map(
-              (meal) => `
-            <div class="meal">
-            <img src="${meal.strMealThumb}" alt="${meal.strMeal}"/>
-            <div class="meal-info" data-mealID="${meal.idMeal}">
-            <h3>${meal.strMeal}</h3></div>
-            </div>`
-            )
-            .join("");
-        }
-      });
-    search.value = "";
-  } else {
-    alert("Please enter a search term");
-  }
-}
-
-//API Use for every meal ID
-function getMealById(mealID) {
-  fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`)
-    .then((res) => res.json())
-    .then((data) => {
-      const meal = data.meals[0];
-      addMealToDOM(meal);
-    });
-}
-function getMeal() {
-  mealsEl.innerHTML = "";
-  resultHeading.innerHTML = "";
-  fetch(`https://www.themealdb.com/api/json/v1/1/random.php`)
-    .then((res) => res.json())
-    .then((data) => {
-      const meal = data.meals[0];
-      addMealToDOM(meal);
-    });
-}
-function addMealToDOM(meal) {
-  const ingredients = [];
-  for (let i = 1; i <= 20; i++) {
-    if (meal[`strIngredient${i}`]) {
-      ingredients.push(
-        `${meal[`strIngredient${i}`]}-${meal[`strMeasure${i}`]}`
-      );
-    } else {
-      break;
+//Catch Search Text use with API and Convert JSON
+const searchMeal = () => {
+    const searchText = document.getElementById('search-field').value;
+    if (searchText == '') {
+        alert("Please Enter a Food Name");
     }
-  }
-  
-  //After Click to get Ingredients
-  single_mealEl.innerHTML = `
-  <div class="single-meal">    
-    <img src="${meal.strMealThumb}" alt="${meal.strMeal}"/>
-    <div style="text-align: left; color: black" class="main">
-        <h3>${meal.strMeal}</h3> <br>        
-        <h5>Ingredients</h5>        
-            ${ingredients.map((ing) => `<p><ul>${ing}</ul></p>`).join("")}        
-    </div>
-  </div>`;
-}
+    else {
 
-//Event Listener Add
-submit.addEventListener("submit", searchMeal);
-random.addEventListener("click", getMeal);
-mealsEl.addEventListener("click", (e) => {
-  const mealInfo = e.path.find((item) => {
-    if (item.classList) {
-      return item.classList.contains("meal-info");
-    } else {
-      return false;
+        const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchText}`
+        //Here Load Data
+        fetch(url)
+            .then(res => res.json())
+            .then(data => displayFoods(data.meals));
     }
-  });
-  if (mealInfo) {
-    const mealID = mealInfo.getAttribute("data-mealid");
-    getMealById(mealID);
-  }
-});
+}
+//After Search Display Food Menu
+const displayFoods = foods => {
+    const foodContainer = document.getElementById('food-container');
+    foodContainer.innerHTML = '';
+    foods.forEach(food => {
+        const foodNameDiv = document.createElement('div');
+        foodNameDiv.innerHTML = `
+            <div id="food-container">
+                <div onclick="getIngredients('${food.idMeal}')" class="food-div">
+                    <img class="food-image" src="${food.strMealThumb}">
+                    <div>
+                        <h6 style="text-align:center; padding-top:5px;">${food.strMeal}</h6>
+                    </div>
+                </div>
+            </div>
+        `
+        foodContainer.appendChild(foodNameDiv);
+    })
+}
+//After Click Any Food for get Ingredients & Some info Use API
+const getIngredients = (id) => {
+    const url = (`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+    fetch(url)
+        .then(res => res.json())
+        .then(data => renderFoodDetails(data.meals[0]));
+}
+//Ingredients Function
+const renderFoodDetails = food => {
+    console.log(food);
+    const foodInfo = document.getElementById('food-detail');
+    foodInfo.innerHTML = `
+        <img class="food-details-image" src="${food.strMealThumb}"> <br> <br>
+        <h2>${food.strMeal}</h2> <br>
+        <h4> Ingredients </h4>  <br>    
+            <p>${food.strIngredient1}</p>
+            <p>${food.strIngredient2}</p>
+            <p>${food.strIngredient3}</p>
+            <p>${food.strIngredient4}</p>
+            <p>${food.strIngredient5}</p>
+            <p>${food.strIngredient6}</p>
+            <p>${food.strIngredient7}</p>
+            <p>${food.strIngredient8}</p>
+            <p>${food.strIngredient9}</p>
+            <p>${food.strIngredient11}</p>
+            <p>${food.strIngredient12}</p>
+            <p>${food.strIngredient13}</p>
+            <p>${food.strIngredient14}</p> 
+            <p>${food.strIngredient15}</p>      
+    `
+}
+  //Thank You

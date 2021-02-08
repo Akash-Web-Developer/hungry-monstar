@@ -1,39 +1,49 @@
-<!-- Assignment Five -->
+<!-- Assignment-5(Hungry Moster) -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hungry Moster</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"
-    />
-  </head>
-  <body>
-    <!-- Use Logo Image -->
-    <div class="logo">
-      <img style="height: 180px; width: 400px;" src="images/logo.png" alt="">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Logo -->
+        <img class="logo" src="images/logo.png" alt="">
+        <!-- Search Bar -->
+        <main class="content-area">
+            <div class="search-bar col-md-6 mx-auto">
+                <div class="search-box my-5">
+                    <input style="border-radius: 25px;" id="search-field" type="text" class="form-control"
+                        placeholder="Search for Meal..">
+                    <button onclick="searchMeal()" style="border-radius: 20px;"
+                        class="btn btn-success search-btn">Search</button>
+                </div>
+            </div>
+        </main>
     </div>
-    <!-- Search Section -->
-    <div class="container">      
-      <div class="flex">
-        <form class="flex" id="submit">
-          <input type="text" id="search" placeholder="Search for Meal..." />
-          <button class="search-btn" type="submit">
-            <i class="fa fa-search"></i>
-          </button>
-        </form>
-        <button class="random-btn" id="random">
-          <i class="fa fa-random"></i>
-        </button>
-      </div>
-      <div id="result-heading"></div>
-      <div id="meals" class="meals"></div>
-      <div id="single-meal"></div>
+    <!-- Display Food Details -->
+    <div id="emty-search">
     </div>
-    <script src="app.js">
-    </script>
-  </body>
+    <div id="food-detail">
+    </div> <br> <br>
+    <div class="container" id="food-container">
+        <div id="food-image"></div>
+        <div id="food-name"></div>
+        <div id="food-image"></div>
+        <div id="food-name"></div>
+    </div>
+    <!-- Custom JavaScript -->
+    <script src="app.js"></script>
+</body>
+
 </html>
+<!-- Thank You -->
